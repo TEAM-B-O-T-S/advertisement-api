@@ -1,27 +1,33 @@
 import { Router } from "express";
 import {
-  addProduct,
-  deleteProductById,
-  getProducts,
-  updateProduct,
+  addAd,
+  deleteAd,
+  getAd,
+  getAllAds,
+  updateAd,
+  updatePartofAd,
 } from "../controllers/products_controller.js";
-import { productPicturesUpload } from "../middlewares/upload.js";
+import { adPicturesUpload } from "../middlewares/upload.js";
 
 // create product router
-const productsRouter = Router();
+const adRouter = Router();
 
 //define routes
-productsRouter.post(
-  "/products",
-  productPicturesUpload.array("image", 3),
-  addProduct
+adRouter.post("/advert", adPicturesUpload.array("image", 3), addAd);
+
+adRouter.get("/advert/:id", getAd);
+
+adRouter.get("/advert", getAllAds);
+
+adRouter.put("/advert/:id", adPicturesUpload.array("image", 3), updateAd);
+
+adRouter.delete("/advert/:id", deleteAd);
+
+adRouter.patch(
+  "/advert/:id",
+  adPicturesUpload.array("image", 3),
+  updatePartofAd
 );
 
-productsRouter.get("/products", getProducts);
-
-productsRouter.put("/products/:id", updateProduct);
-
-productsRouter.delete("/products/:id", deleteProductById);
-
 //export router
-export default productsRouter;
+export default adRouter;

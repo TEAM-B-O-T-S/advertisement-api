@@ -10,7 +10,7 @@ export const remoteUpload = multer({
   }),
 });
 
-export const productImageUpload = multer({
+export const adImageUpload = multer({
   storage: multerSaveFilesOrg({
     apiAccessToken: process.env.SAVEFILESORG_API_KEY,
     relativePath: "/advert-api/product-images/*",
@@ -19,7 +19,7 @@ export const productImageUpload = multer({
   }),
 });
 
-export const productPicturesUpload = multer({
+export const adPicturesUpload = multer({
   storage: multerSaveFilesOrg({
     apiAccessToken: process.env.SAVEFILESORG_API_KEY,
     relativePath: "/advert-api/product-pictures/*",

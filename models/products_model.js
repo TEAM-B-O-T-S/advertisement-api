@@ -1,7 +1,7 @@
 import { Schema, model, modelNames } from "mongoose";
 import normalize from "normalize-mongoose";
 
-const productSchema = new Schema(
+const adSchema = new Schema(
   {
     title: { type: String, required: true },
     description: { type: String, required: true },
@@ -14,5 +14,5 @@ const productSchema = new Schema(
   }
 );
 
-productSchema.plugin(normalize);
-export const ProductModel = model("Product", productSchema);
+adSchema.plugin(normalize);
+export const AdModel = model("Advert", adSchema);
