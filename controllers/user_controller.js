@@ -51,9 +51,10 @@ export const loginUser = async (req, res, next) => {
     return res.status(401).json("invalid credentials");
   }
   //generate access token for user
-  const accessToken = jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY, {
-    expiresIn: "24h",
-  });
-  //return response
-  res.status(200).json({ accessToken });
+  const accessToken = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET_KEY, {
+    expiresIn: "24h", // Token expiration
+});
+
+// Return response with token and role
+res.status(200).json({ accessToken, role: user.role });
 };
