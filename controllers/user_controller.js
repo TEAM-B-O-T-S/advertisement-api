@@ -5,6 +5,7 @@ import {
   registerUserValidator,
 } from "../validators/user.js";
 import { UserModel } from "../models/user_model.js";
+import { sendEmail } from "../utils/mailing.js";
 
 export const registerUser = async (req, res, next) => {
   //validate user information
@@ -27,6 +28,12 @@ export const registerUser = async (req, res, next) => {
     password: hashedPassword,
   });
   //send registration email to user
+  const sendWelcomeEmail = await sendEmail(
+    result.email,
+    "Welcome to Notes",
+    `Hello ${result.username} `
+  );
+  console.log(sendWelcomeEmail);
   //(optional) generate access token for user
   //return response
   res.status(201).json("user registered successfully");
@@ -51,10 +58,14 @@ export const loginUser = async (req, res, next) => {
     return res.status(401).json("invalid credentials");
   }
   //generate access token for user
-  const accessToken = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET_KEY, {
-    expiresIn: "24h", // Token expiration
-});
+  const accessToken = jwt.sign(
+    { id: user.id, role: user.role },
+    process.env.JWT_SECRET_KEY,
+    {
+      expiresIn: "24h", // Token expiration
+    }
+  );
 
-// Return response with token and role
-res.status(200).json({ accessToken, role: user.role });
+  // Return response with token and role
+  res.status(200).json({ accessToken, role: user.role });
 };
