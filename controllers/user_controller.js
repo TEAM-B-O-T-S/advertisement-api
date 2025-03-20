@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import {
   loginUserValidator,
   registerUserValidator,
+  updateUserValidator,
 } from "../validators/user.js";
 import { UserModel } from "../models/user_model.js";
 import { sendEmail } from "../utils/mailing.js";
@@ -68,4 +69,22 @@ export const loginUser = async (req, res, next) => {
 
   // Return response with token and role
   res.status(200).json({ accessToken, role: user.role });
+};
+
+export const updateUser = async (req, res, next) => {
+  //validate request body
+  const { error, value } = updateUserValidator.validate(req.body);
+  if (error) {
+    return res.status(422).json(error);
+  }
+  //update user in database
+  const result = await UserModel.findByIdAndUpdate(
+    //for a user to update themselves (req.auth.id),
+    //for a superadmin to update themselves
+    req.params.id,
+    value,
+    { new: true }
+  );
+  //return response
+  res.status(200).json(result);
 };
