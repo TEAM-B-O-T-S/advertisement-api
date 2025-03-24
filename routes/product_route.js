@@ -15,20 +15,32 @@ import { auth } from "../middlewares/auth.js";
 const adRouter = Router();
 
 //define routes
-adRouter.post("/advert",auth, adPicturesUpload.array("image", 3), authorize(['vendor']), addAd);
+adRouter.post(
+  "/advert",
+  auth,
+  adPicturesUpload.array("image", 3),
+  authorize(["vendor"]),
+  addAd
+);
 
-adRouter.get("/advert/:id",auth, authorize(['user', 'vendor']), getAd);
+adRouter.get("/advert/:id", auth, authorize(["user", "vendor"]), getAd);
 
-adRouter.get("/advert",auth,authorize(['user']), getAllAds);
+adRouter.get("/advert", auth, authorize(["user", "vendor"]), getAllAds);
 
-adRouter.put("/advert/:id",auth, adPicturesUpload.array("image", 3),authorize([ 'vendor']), updateAd);
+adRouter.put(
+  "/advert/:id",
+  auth,
+  adPicturesUpload.array("image", 3),
+  authorize(["vendor", "admin"]),
+  updateAd
+);
 
-adRouter.delete("/advert/:id",auth,authorize(['vendor']), deleteAd);
+adRouter.delete("/advert/:id", auth, authorize(["vendor", "admin"]), deleteAd);
 
 adRouter.patch(
   "/advert/:id",
   adPicturesUpload.array("image", 3),
-  authorize(['vendor']),
+  authorize(["vendor", "admin"]),
   updatePartofAd
 );
 
