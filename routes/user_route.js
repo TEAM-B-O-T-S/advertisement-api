@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  getAuthenticated,
   loginUser,
   registerUser,
   updateUser,
@@ -9,9 +10,11 @@ import { auth } from "../middlewares/auth.js";
 
 export const userRouter = Router();
 
+//Define routes
 userRouter.post("/users/register", registerUser);
 userRouter.post("/users/login", loginUser);
-userRouter.patch("/users/:id",auth, authorize (['admin']), updateUser);
+userRouter.patch("/users/:id", auth, authorize(["admin"]), updateUser);
+userRouter.get("/users/me", auth, getAuthenticated);
 
 //export router
 export default userRouter;
