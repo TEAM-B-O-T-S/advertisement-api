@@ -100,8 +100,7 @@ export const registerUser = async (req, res, next) => {
           </div>
         </div>
       </body>
-    </html>`,
-    
+    </html>`
   );
   console.log(sendWelcomeEmail);
   //(optional) generate access token for user
@@ -137,7 +136,7 @@ export const loginUser = async (req, res, next) => {
   );
 
   // Return response with token and role
-  res.status(200).json({ accessToken, role: user.role });
+  res.status(200).json({ accessToken, role: user.role, id: user.id });
 };
 
 export const updateUser = async (req, res, next) => {
@@ -162,14 +161,11 @@ export const getAuthenticated = async (req, res, next) => {
   try {
     //Get user by id using req.auth.id
     const result = await UserModel.findById(req.auth.id).select({
-      password:false,
-    })  
-  //return response
-  res.status(200).json(result);
-  }catch (error) {
+      password: false,
+    });
+    //return response
+    res.status(200).json(result);
+  } catch (error) {
     next(error);
   }
-}
-
-    
-  
+};

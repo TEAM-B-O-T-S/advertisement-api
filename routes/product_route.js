@@ -4,6 +4,7 @@ import {
   deleteAd,
   getAd,
   getAllAds,
+  getVendorAds,
   updateAd,
   updatePartofAd,
 } from "../controllers/products_controller.js";
@@ -36,6 +37,13 @@ adRouter.put(
 );
 
 adRouter.delete("/advert/:id", auth, authorize(["vendor", "admin"]), deleteAd);
+
+adRouter.get(
+  "/vendoradvert/:id",
+  auth,
+  authorize(["vendor", "admin"]),
+  getVendorAds
+);
 
 adRouter.patch(
   "/advert/:id",

@@ -1,4 +1,4 @@
-import { Schema, model, modelNames } from "mongoose";
+import { Schema, Types, model, modelNames } from "mongoose";
 import normalize from "normalize-mongoose";
 
 const adSchema = new Schema(
@@ -8,6 +8,7 @@ const adSchema = new Schema(
     image: [{ type: String, required: true }],
     price: { type: Number, required: true },
     category: { type: String, required: true },
+    vendorId: { type: Types.ObjectId },
   },
   {
     timestamps: true,
