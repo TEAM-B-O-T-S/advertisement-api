@@ -20,7 +20,10 @@ export const addAd = async (req, res, next) => {
       return res.status(422).json(error.details[0].message);
     }
     //save product information in database
-    const result = await AdModel.create(value);
+    const result = await AdModel.create({
+      ...value,
+      vendorId: req.auth.id,
+    });
     //return response
     return res.status(201).json(result);
   } catch (error) {
@@ -78,4 +81,11 @@ export const deleteAd = async (req, res) => {
     }
   );
   res.send("deleted ad successfully");
+};
+
+export const getVendorAds = async (req, res) => {
+  const getAds = await AdModel.find({
+    vendorId: req.auth.id,
+  });
+  res.status(200).json(getAds);
 };
