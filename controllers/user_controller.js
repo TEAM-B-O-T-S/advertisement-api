@@ -169,3 +169,8 @@ export const getAuthenticated = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getAllUsers = async (req, res) => {
+  const allUsers = await UserModel.find({});
+  res.status(200).json({ data: allUsers });
+};
