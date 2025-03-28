@@ -26,7 +26,12 @@ adRouter.post(
 
 adRouter.get("/advert/:id", auth, authorize(["user", "vendor"]), getAd);
 
-adRouter.get("/advert", auth, authorize(["user", "vendor"]), getAllAds);
+adRouter.get(
+  "/advert",
+  auth,
+  authorize(["user", "vendor", "admin"]),
+  getAllAds
+);
 
 adRouter.put(
   "/advert/:id",

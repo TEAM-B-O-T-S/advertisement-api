@@ -34,12 +34,23 @@ export const addAd = async (req, res, next) => {
 export const getAllAds = async (req, res, next) => {
   try {
     const { filter = "{}", sort = "{}" } = req.query;
-    //fetch products from database
-    const result = await AdModel.find(JSON.parse(filter)).sort(
-      JSON.parse(sort)
-    );
-    //return response
-    return res.status(201).json(result);
+
+    // Parse filter and sort parameters with error handling
+    let parsedFilter, parsedSort;
+    try {
+      parsedFilter = JSON.parse(filter);
+      parsedSort = JSON.parse(sort);
+    } catch (parseError) {
+      return res
+        .status(400)
+        .json({ error: "Invalid filter or sort query parameters." });
+    }
+
+    // Fetch products from the database
+    const result = await AdModel.find(parsedFilter).sort(parsedSort);
+
+    // Return response
+    return res.status(200).json(result);
   } catch (error) {
     next(error);
   }
